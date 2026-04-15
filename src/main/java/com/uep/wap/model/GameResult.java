@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="students")
-public class Student{
+public class Tournament {
     @Id
     @Column(name ="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class Student{
     public long getId(){
         return id;
     }
-    public Student(){
+    public Tournament(){
 
     }
 
@@ -41,7 +41,7 @@ public class Student{
         this.points = points;
     }
 
-    public Student(String name, Integer points){
+    public Tournament(String name, Integer points){
 
     }
 }
