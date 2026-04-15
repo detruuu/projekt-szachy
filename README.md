@@ -1,4 +1,4 @@
-# ♟️ Chess Tournament Planner — REST API
+# ♟️ Chess Tournament Planner - REST API
 
 Backendowe REST API do zarządzania turniejami szachowymi w systemie szwajcarskim. Automatyzuje parowanie rund zgodnie z przepisami FIDE, oblicza zmiany ratingu ELO po każdym turnieju oraz udostępnia statystyki zawodników i historię ratingów.
 
