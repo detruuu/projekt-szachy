@@ -1,48 +1,37 @@
 package com.uep.wap.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name="students")
-public class Tournament {
+@Table(name="elo_history")
+public class EloHistory {
+
     @Id
-    @Column(name ="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name ="name")
-    private String name;
-    @Column(name ="points")
-    private Integer points;
 
+    @ManyToOne
+    @JoinColumn(name="player_id")
+    private Player player;
 
-    public void setId(long id){
-        this.id = id;
-    }
-    public long getId(){
-        return id;
-    }
-    public Tournament(){
+    @ManyToOne
+    @JoinColumn(name="tournament_id")
+    private Tournament tournament;
 
-    }
+    @Column(name="rating_before")
+    private Integer ratingBefore;
 
-    public String getName() {
-        return name;
-    }
+    @Column(name="rating_after")
+    private Integer ratingAfter;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @Column(name="delta")
+    private Integer delta;
 
-    public Integer getPoints() {
-        return points;
-    }
+    @Column(name="recorded_at")
+    private LocalDateTime recordedAt;
 
-    public void setPoints(Integer points) {
-        this.points = points;
-    }
+    public EloHistory(){}
 
-    public Tournament(String name, Integer points){
-
-    }
+    // gettery/settery
 }
-

@@ -1,48 +1,39 @@
 package com.uep.wap.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name="students")
-public class Student{
+@Table(name="players")
+public class Player {
+
     @Id
-    @Column(name ="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name ="name")
-    private String name;
-    @Column(name ="points")
-    private Integer points;
 
+    @Column(name="first_name")
+    private String firstName;
 
-    public void setId(long id){
-        this.id = id;
-    }
-    public long getId(){
-        return id;
-    }
-    public Student(){
+    @Column(name="last_name")
+    private String lastName;
 
-    }
+    @Column(name="email")
+    private String email;
 
-    public String getName() {
-        return name;
-    }
+    @Column(name="elo_rating")
+    private Integer eloRating;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @Column(name="fide_title")
+    private String fideTitle;
 
-    public Integer getPoints() {
-        return points;
-    }
+    @Column(name="federation")
+    private String federation;
 
-    public void setPoints(Integer points) {
-        this.points = points;
-    }
+    @Column(name="created_at")
+    private LocalDateTime createdAt;
 
-    public Student(String name, Integer points){
+    public Player(){}
 
-    }
+    // gettery/settery
 }
-

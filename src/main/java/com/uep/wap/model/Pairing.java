@@ -3,46 +3,29 @@ package com.uep.wap.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="students")
-public class Tournament {
+@Table(name="pairings")
+public class Pairing {
+
     @Id
-    @Column(name ="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name ="name")
-    private String name;
-    @Column(name ="points")
-    private Integer points;
 
+    @ManyToOne
+    @JoinColumn(name="round_id")
+    private Round round;
 
-    public void setId(long id){
-        this.id = id;
-    }
-    public long getId(){
-        return id;
-    }
-    public Tournament(){
+    @ManyToOne
+    @JoinColumn(name="player_white")
+    private Player playerWhite;
 
-    }
+    @ManyToOne
+    @JoinColumn(name="player_black")
+    private Player playerBlack;
 
-    public String getName() {
-        return name;
-    }
+    @Column(name="board_number")
+    private Integer boardNumber;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public Pairing(){}
 
-    public Integer getPoints() {
-        return points;
-    }
-
-    public void setPoints(Integer points) {
-        this.points = points;
-    }
-
-    public Tournament(String name, Integer points){
-
-    }
+    // gettery/settery
 }
-

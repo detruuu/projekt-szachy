@@ -1,48 +1,31 @@
 package com.uep.wap.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name="students")
-public class Tournament {
+@Table(name="rounds")
+public class Round {
+
     @Id
-    @Column(name ="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name ="name")
-    private String name;
-    @Column(name ="points")
-    private Integer points;
 
+    @ManyToOne
+    @JoinColumn(name="tournament_id")
+    private Tournament tournament;
 
-    public void setId(long id){
-        this.id = id;
-    }
-    public long getId(){
-        return id;
-    }
-    public Tournament(){
+    @Column(name="round_number")
+    private Integer roundNumber;
 
-    }
+    @Column(name="status")
+    private String status;
 
-    public String getName() {
-        return name;
-    }
+    @Column(name="generated_at")
+    private LocalDateTime generatedAt;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public Round(){}
 
-    public Integer getPoints() {
-        return points;
-    }
-
-    public void setPoints(Integer points) {
-        this.points = points;
-    }
-
-    public Tournament(String name, Integer points){
-
-    }
+    // gettery/settery
 }
-
