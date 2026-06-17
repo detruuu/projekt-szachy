@@ -101,6 +101,57 @@ function confirmAction(message) {
     }).then(result => result.isConfirmed);
 }
 
+function renderAuthSection() {
+    const section = document.getElementById('auth-nav-section');
+    if (!section) return;
+
+    const username = sessionStorage.getItem('auth_username');
+    if (username) {
+        section.innerHTML = `
+            <span class="text-white me-3"><i class="bi bi-person-fill"></i> ${username}</span>
+            <button class="btn btn-outline-light btn-sm" id="btn-logout">Wyloguj</button>
+        `;
+        document.getElementById('btn-logout').addEventListener('click', () => {
+            sessionStorage.removeItem('auth_username');
+            sessionStorage.removeItem('auth_password');
+            renderAuthSection();
+            showSuccess('Wylogowano pomyślnie');
+            renderCurrentRoute();
+        });
+    } else {
+        section.innerHTML = `
+            <button class="btn btn-outline-light btn-sm" id="btn-login-prompt">Zaloguj się</button>
+        `;
+        document.getElementById('btn-login-prompt').addEventListener('click', () => {
+            Swal.fire({
+                title: 'Logowanie',
+                html: `
+                    <input type="text" id="swal-username" class="swal2-input" placeholder="Użytkownik (np. arbiter, admin)">
+                    <input type="password" id="swal-password" class="swal2-input" placeholder="Hasło">
+                `,
+                confirmButtonText: 'Zaloguj',
+                focusConfirm: false,
+                preConfirm: () => {
+                    const usernameInput = Swal.getPopup().querySelector('#swal-username').value;
+                    const passwordInput = Swal.getPopup().querySelector('#swal-password').value;
+                    if (!usernameInput || !passwordInput) {
+                        Swal.showValidationMessage(`Wprowadź login i hasło`);
+                    }
+                    return { username: usernameInput, password: passwordInput };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    sessionStorage.setItem('auth_username', result.value.username);
+                    sessionStorage.setItem('auth_password', result.value.password);
+                    renderAuthSection();
+                    showSuccess('Zalogowano pomyślnie jako ' + result.value.username);
+                    renderCurrentRoute();
+                }
+            });
+        });
+    }
+}
+
 /**
  * Initialize the application
  */
@@ -113,6 +164,8 @@ function initApp() {
             navigateTo(route);
         });
     });
+
+    renderAuthSection();
 
     // Initial route render
     renderCurrentRoute();

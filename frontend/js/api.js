@@ -9,9 +9,21 @@ const API_CONFIG = {
 };
 
 const ApiService = {
+    getHeaders: function() {
+        const headers = { 'Content-Type': 'application/json' };
+        const username = sessionStorage.getItem('auth_username');
+        const password = sessionStorage.getItem('auth_password');
+        if (username && password) {
+            headers['Authorization'] = 'Basic ' + btoa(username + ':' + password);
+        }
+        return headers;
+    },
+
     get: async function(endpoint) {
         try {
-            const response = await fetch(`${API_CONFIG.baseUrl}${endpoint}`);
+            const response = await fetch(`${API_CONFIG.baseUrl}${endpoint}`, {
+                headers: this.getHeaders()
+            });
             if (!response.ok) throw new Error(`Błąd API: ${response.status} ${response.statusText}`);
             return await response.json();
         } catch (error) {
@@ -24,7 +36,7 @@ const ApiService = {
         try {
             const response = await fetch(`${API_CONFIG.baseUrl}${endpoint}`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: this.getHeaders(),
                 body: JSON.stringify(data)
             });
             if (!response.ok) throw new Error(`Błąd API: ${response.status} ${response.statusText}`);
@@ -39,7 +51,7 @@ const ApiService = {
         try {
             const response = await fetch(`${API_CONFIG.baseUrl}${endpoint}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: this.getHeaders(),
                 body: JSON.stringify(data)
             });
             if (!response.ok) throw new Error(`Błąd API: ${response.status} ${response.statusText}`);
@@ -52,7 +64,10 @@ const ApiService = {
 
     delete: async function(endpoint) {
         try {
-            const response = await fetch(`${API_CONFIG.baseUrl}${endpoint}`, { method: 'DELETE' });
+            const response = await fetch(`${API_CONFIG.baseUrl}${endpoint}`, {
+                method: 'DELETE',
+                headers: this.getHeaders()
+            });
             if (!response.ok) throw new Error(`Błąd API: ${response.status} ${response.statusText}`);
             return true;
         } catch (error) {
