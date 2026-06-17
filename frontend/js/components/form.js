@@ -22,6 +22,9 @@ function createForm(fields, options) {
 
     // Merge default options with provided options
     const formOptions = { ...defaultOptions, ...options };
+    if (!formOptions.initialValues) {
+        formOptions.initialValues = {};
+    }
 
     // Create form element
     const form = document.createElement('form');

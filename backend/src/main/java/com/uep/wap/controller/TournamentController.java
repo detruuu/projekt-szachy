@@ -32,13 +32,6 @@ public class TournamentController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping(path = "/{id}/rounds")
-    public ResponseEntity<List<Round>> getTournamentRounds(@PathVariable Long id) {
-        return tournamentService.getTournamentById(id)
-                .map(tournament -> ResponseEntity.ok(tournamentService.getRoundsForTournament(id)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
     @PostMapping
     public ResponseEntity<TournamentDTO> createTournament(@RequestBody TournamentCreateRequestDTO requestDTO) {
         TournamentDTO created = tournamentService.createTournament(requestDTO);
